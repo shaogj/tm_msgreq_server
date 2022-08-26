@@ -1,0 +1,8 @@
+File opened at: 2022/08/25 19:40:16
+Built with gc go1.16.15 for darwin/amd64
+[E 2022/08/25 19:40:16.244 req_unit.go:162] cur after CommitTMVoteMsg(),get error! ,getRespInfo is :,err is:Get "http://192.168.1.221:46657/tri_broadcast_tx_commit?tx=%22ssA1710BBsssCCaadCCs11pyA9u%22": read tcp 10.182.1.19:55543->192.168.1.221:46657: read: connection reset by peer
+[E 2022/08/25 19:40:16.245 reqtmurl.go:81] cur after broadcast_tx_commit(),get error! ,getRespInfo is :,err is:Get "http://192.168.1.221:46657/tri_broadcast_tx_commit?tx=%22ssA1710BBsssCCaadCCs11pyA9u%22": read tcp 10.182.1.19:55543->192.168.1.221:46657: read: connection reset by peer
+[E 2022/08/25 19:40:16.245 reqtmurl.go:58] run ticker task ReqRMcommitTxInterval()，curheight is:0，this.RequestInterval is:10
+[E 2022/08/25 19:48:14.625 req_unit.go:162] cur after CommitTMVoteMsg(),get error! ,getRespInfo is :,err is:Get "http://192.168.1.221:46657/tri_broadcast_tx_commit?tx=%22ssA1710BBsssCCaadCCs11G6qxt%22": read tcp 10.182.1.19:55801->192.168.1.221:46657: read: connection reset by peer
+[E 2022/08/25 19:48:14.626 reqtmurl.go:81] cur after broadcast_tx_commit(),get error! ,getRespInfo is :,err is:Get "http://192.168.1.221:46657/tri_broadcast_tx_commit?tx=%22ssA1710BBsssCCaadCCs11G6qxt%22": read tcp 10.182.1.19:55801->192.168.1.221:46657: read: connection reset by peer
+[E 2022/08/25 19:48:14.626 reqtmurl.go:58] run ticker task ReqRMcommitTxInterval()，curheight is:0，this.RequestInterval is:10

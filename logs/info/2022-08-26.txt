@@ -1,0 +1,25 @@
+File opened at: 2022/08/26 10:32:51
+Built with gc go1.16.15 for darwin/amd64
+[I 2022/08/26 10:32:51.271 main.go:69] log level: TRACE
+[I 2022/08/26 10:32:51.272 reqtmurl.go:45] 启动投票服务，interval is:10
+[I 2022/08/26 10:33:01.273 reqtmurl.go:55] run ticker cur UrlSwitch IP  is:192.168.1.221，
+File opened at: 2022/08/26 10:37:48
+Built with gc go1.16.15 for darwin/amd64
+[I 2022/08/26 10:37:48.132 main.go:69] log level: TRACE
+[I 2022/08/26 10:37:48.133 reqtmurl.go:45] 启动投票服务，interval is:10
+[I 2022/08/26 10:37:58.134 reqtmurl.go:55] run ticker cur UrlSwitch IP  is:192.168.1.221，
+[I 2022/08/26 10:38:00.111 req_unit.go:167] cur invoke CommitTMVoteMsg() succ! getRespInfo is:getRespInfo
+[I 2022/08/26 10:38:00.113 req_unit.go:175] cur json.Unmarshal succ. respInfo is:{{0 []   1 0   0 } {0 []   0 0 } E5EF1E7604F153A0AE0E1A3BBE78B7800162FA75206145585402578C8D2CD8F2 2075},getrrrInfo is:&{{0 []   1 0   0 } {0 []   0 0 } E5EF1E7604F153A0AE0E1A3BBE78B7800162FA75206145585402578C8D2CD8F2 2075}
+[I 2022/08/26 10:38:00.114 reqtmurl.go:60] run ticker task ReqRMcommitTxInterval()，curheight is:2075，err is:<nil>
+[I 2022/08/26 10:38:08.134 reqtmurl.go:55] run ticker cur UrlSwitch IP  is:192.168.1.222，
+[I 2022/08/26 10:38:10.090 req_unit.go:167] cur invoke CommitTMVoteMsg() succ! getRespInfo is:getRespInfo
+[I 2022/08/26 10:38:10.091 req_unit.go:175] cur json.Unmarshal succ. respInfo is:{{0 []   1 0   0 } {0 []   0 0 } 34F24983FE9C76894B88898DFA7C846A38401D9EFC3EB55A66478E96A99B7D08 2077},getrrrInfo is:&{{0 []   1 0   0 } {0 []   0 0 } 34F24983FE9C76894B88898DFA7C846A38401D9EFC3EB55A66478E96A99B7D08 2077}
+[I 2022/08/26 10:38:10.091 reqtmurl.go:60] run ticker task ReqRMcommitTxInterval()，curheight is:2077，err is:<nil>
+[I 2022/08/26 10:38:18.133 reqtmurl.go:55] run ticker cur UrlSwitch IP  is:192.168.1.223，
+[I 2022/08/26 10:38:21.150 req_unit.go:167] cur invoke CommitTMVoteMsg() succ! getRespInfo is:getRespInfo
+[I 2022/08/26 10:38:21.150 req_unit.go:175] cur json.Unmarshal succ. respInfo is:{{0 []   1 0   0 } {0 []   0 0 } 973DDADCCEFC0B9345C213FEF1C0E76DD337CB2C3F2C78E3C2A1E8251E8A0C80 2079},getrrrInfo is:&{{0 []   1 0   0 } {0 []   0 0 } 973DDADCCEFC0B9345C213FEF1C0E76DD337CB2C3F2C78E3C2A1E8251E8A0C80 2079}
+[I 2022/08/26 10:38:21.150 reqtmurl.go:60] run ticker task ReqRMcommitTxInterval()，curheight is:2079，err is:<nil>
+[I 2022/08/26 10:38:28.134 reqtmurl.go:55] run ticker cur UrlSwitch IP  is:192.168.1.221，
+[I 2022/08/26 10:38:30.262 req_unit.go:167] cur invoke CommitTMVoteMsg() succ! getRespInfo is:getRespInfo
+[I 2022/08/26 10:38:30.262 req_unit.go:175] cur json.Unmarshal succ. respInfo is:{{0 []   1 0   0 } {0 []   0 0 } EE0ABF7A24E89E16A98E5F560DDC521041DD677C3D24C31F8AAF97BE0A2A1233 2081},getrrrInfo is:&{{0 []   1 0   0 } {0 []   0 0 } EE0ABF7A24E89E16A98E5F560DDC521041DD677C3D24C31F8AAF97BE0A2A1233 2081}
+[I 2022/08/26 10:38:30.262 reqtmurl.go:60] run ticker task ReqRMcommitTxInterval()，curheight is:2081，err is:<nil>

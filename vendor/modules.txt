@@ -1,0 +1,25 @@
+# github.com/davecgh/go-spew v1.1.1
+github.com/davecgh/go-spew/spew
+# github.com/mattn/go-colorable v0.1.13
+## explicit
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.16
+github.com/mattn/go-isatty
+# github.com/mkideal/log v1.0.0
+## explicit
+github.com/mkideal/log
+github.com/mkideal/log/logger
+github.com/mkideal/log/provider
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
+# github.com/shopspring/decimal v1.3.1
+## explicit
+github.com/shopspring/decimal
+# github.com/stretchr/testify v1.8.0
+## explicit
+github.com/stretchr/testify/assert
+# golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+# gopkg.in/yaml.v3 v3.0.1
+gopkg.in/yaml.v3
