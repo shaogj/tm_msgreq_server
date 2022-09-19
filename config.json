@@ -1,0 +1,9 @@
+{
+  "TransAmount": 0,
+  "SendTxInterval"  :4,
+  "TMNodeUrl1" : "106.3.133.179",
+  "TMNodeUrl2" : "106.3.133.180",
+  "TMNodeUrl3" : "210.73.218.4171",
+  "WebPort": 7444
+  
+}

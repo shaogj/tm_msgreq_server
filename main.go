@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -53,6 +54,24 @@ func GetExternIP2() {
 	clientIP := fmt.Sprintf("%s", string(body))
 	print(clientIP)
 }
+
+func InitNodeList(curcfg *config.ConfigInfomation) []string {
+	curNodeUrlList := make([]string, 0)
+	if curcfg.TMNodeUrl1 == "" {
+		curcfg.TMNodeUrl1 = "106.3.133.179"
+	}
+	if curcfg.TMNodeUrl1 == "" {
+		curcfg.TMNodeUrl1 = "106.3.133.179"
+	}
+	if curcfg.TMNodeUrl1 == "" {
+		curcfg.TMNodeUrl1 = "106.3.133.179"
+	}
+	curNodeUrlList = append(curNodeUrlList, curcfg.TMNodeUrl1)
+	curNodeUrlList = append(curNodeUrlList, curcfg.TMNodeUrl2)
+	curNodeUrlList = append(curNodeUrlList, curcfg.TMNodeUrl3)
+	return curNodeUrlList
+
+}
 func main() {
 	getlocalIp := getIPV6Lan()
 	fmt.Println("getlocalIp is:%s", getlocalIp)
@@ -66,13 +85,31 @@ func main() {
 	if err := config.InitWithProviders("multifile/console", "./logs"); err != nil {
 		panic("init log error: " + err.Error())
 	}
-	log.Info("log level: %v", log.SetLevelFromString("trace"))
+	log.Info("log level: %v\r\n", log.SetLevelFromString("trace"))
+	//0917add
+	err = config.InitConfigInfo()
+	if nil != err {
+		log.Error("from config.json,get json conf err!")
+		os.Exit(0)
+	}
+	gbConf := &config.GbConf
 
+	strHost := fmt.Sprintf(":%d", gbConf.WebPort)
+	fmt.Printf("strHost is :%s,loglevel is:%s", strHost, gbConf.LogLevel)
+	curNodeUrlList := InitNodeList(gbConf)
+	fmt.Printf("checking==strHost is :%v\n", curNodeUrlList)
+
+	//0917
 	ch := make(chan int)
-	reqProc := curl_req.VoteServer{RequestInterval: 10}
+	curRequestInterval := gbConf.SendTxInterval
+	if curRequestInterval == 0 {
+		curRequestInterval = 10
+	}
+	reqProc := curl_req.VoteServer{RequestInterval: curRequestInterval, NodeUrlList: curNodeUrlList} //10
 	go reqProc.ResetGroupVotesMap(reqProc.RequestInterval)
+	//curl_req.ReqRMcommitTxInterval()
+	//curl_req.ReqSTDTMcommitValidatorTx("106.3.133.179", "", "")
 	getReq := <-ch
 	fmt.Println(getReq)
-	//curl_req.ReqRMcommitTxInterval()
 
 }
