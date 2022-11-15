@@ -3,12 +3,11 @@ package handle
 import (
 	"2021New_BFLProjTotal/tm_msgreq_server/proto"
 	tmjson "2021New_BFLProjTotal/tm_msgreq_server/utils/json"
-	"github.com/mkideal/log"
-
 	crand "crypto/rand"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/mkideal/log"
 	"io/ioutil"
 	mrand "math/rand"
 	"net"
@@ -73,7 +72,7 @@ MAIN_LOOP:
 	return string(chars)
 }
 
-//1129add,to auto get local server IP
+// 1129add,to auto get local server IP
 func ExternalIP() (net.IP, error) {
 	ifaces, err := net.Interfaces()
 	if err != nil {
@@ -123,13 +122,12 @@ func getIpFromAddr(addr net.Addr) net.IP {
 func ReqGetUrl(vertify string) (respstr string, err error) {
 	resp, err := http.Get(vertify)
 	if err != nil {
-		fmt.Println("when trustQuery,Marshal to json error:%s", err.Error())
+		//fmt.Println("when trustQuery,Marshal to json error:%s", err.Error())
 		return "", err
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("when trustQuery,Marshal to json error:%s", err.Error())
 		return "", err
 	}
 	return string(body), nil
@@ -165,7 +163,6 @@ func SendRMSVoteMsgToNode(nodeUrl, sendmsg string) (getblockInfo string, getresq
 	//0824,,fmt.print,not to log.Info
 	fmt.Println("cur invoke CommitTMVoteMsg() succ! getRespInfo is:%v", getRespInfo)
 	log.Info("cur invoke CommitTMVoteMsg() succ! getRespInfo is:%v", "getRespInfo")
-
 	respInfo := proto.ResultBroadcastTxCommit{}
 	getrrrInfo, err := UnmarshalResponseBytes([]byte(getRespInfo), &respInfo)
 	if nil != err {
@@ -175,4 +172,28 @@ func SendRMSVoteMsgToNode(nodeUrl, sendmsg string) (getblockInfo string, getresq
 	log.Info("cur json.Unmarshal succ. respInfo is:%v,getrrrInfo is:%v", respInfo, getrrrInfo)
 
 	return getRespInfo, &respInfo, nil
+}
+
+// 1104add
+// chan *proto.ResultBroadcastTxCommit
+func SendAsyncMsgToTMNode(nodeUrl, sendmsg string, results chan<- *proto.ResultBroadcastTxCommit) (err error) {
+	//time.Sleep(time.Second * 50)
+	sendinfo := fmt.Sprintf("%s%s", nodeUrl, sendmsg)
+	getRespInfo, err := ReqGetUrl(sendinfo)
+	if err != nil {
+		log.Error("cur after CommitTMVoteMsg(),get error! ,getRespInfo is :%v,err is:%v", getRespInfo, err)
+		return err
+	}
+	fmt.Println("cur invoke CommitTMVoteMsg() succ! getRespInfo is:%v", getRespInfo)
+	log.Info("cur invoke CommitTMVoteMsg() succ! getRespInfo is:%v", "getRespInfo")
+	respInfo := proto.ResultBroadcastTxCommit{}
+	getrrrInfo, err := UnmarshalResponseBytes([]byte(getRespInfo), &respInfo)
+	if nil != err {
+		log.Error("resp=%s,url=%s,err=%v", string(getRespInfo), nodeUrl, err.Error())
+		return err
+	}
+	log.Info("cur json.Unmarshal succ. respInfo is:%v,getrrrInfo is:%v", respInfo, getrrrInfo)
+	results <- &respInfo
+
+	return nil
 }

@@ -45,16 +45,12 @@ func UrlSwitchBJ(n int) string { //-----
 // 清理历史数据
 func (this *VoteServer) ResetGroupVotesMap(interval int) {
 	log.Info("TM reqmsg server start!interval is:%d", interval)
-	//20 *RequestInterval = 20个分组周期清理历史数据
 	ticker := time.NewTicker(time.Second * time.Duration(this.RequestInterval))
 	defer ticker.Stop()
 	for {
 		select {
 		case <-ticker.C:
-			//curmin := time.Now().Minute()
-			//UrlSwitchLocal
-			//curNodeIp := UrlSwitchBJ(this.CurSerionNum % 3)
-			//0917
+
 			curNodeIp := this.NodeUrlList[this.CurSerionNum%3]
 			//ipsevre :
 			log.Info("run ticker cur auto UrlSwitch===  is:%s，", curNodeIp)
@@ -64,30 +60,32 @@ func (this *VoteServer) ResetGroupVotesMap(interval int) {
 			}
 			log.Info("run ticker task ReqRMcommitTxInterval()，curheight is:%d，err is:%v", curheight, err)
 			this.CurSerionNum++
-			//to do,,获取上一个周期时间的投票分组信息,to single队列任务
-			//case <-this.qtChan:
-			//	ticker.Stop()
-			//return
+
 		}
 	}
 }
 
 func ReqRMcommitTxInterval(curip string) (curheight int64, err error) {
-	//nodeUrl := "http://101.251.211.201:21630/tri_broadcast_tx_commit?"
-	//nodeUrl := "http://192.168.1.222:46657/tri_broadcast_tx_commit?"
+	//tri_broadcast_tx_commit
+	//nodeUrl := fmt.Sprintf("http://%s:46657/tri_bc_tx_async?", curip)
 	nodeUrl := fmt.Sprintf("http://%s:46657/tri_broadcast_tx_commit?", curip)
+	//end update
 	getrandnumstr := handle.RandStr(5)
 	fmt.Println("get randnumstr7777 is:%s,nodeUrl is:%s", getrandnumstr, nodeUrl)
 
 	//sendmsgNew := fmt.Sprintf("%s:%s%22","ssA1710BBsssCCaaCC11",getrandnumstr)
 	sendmsgNew := "tx=%22" + "ssA1710BBsssCCaadCCs11" + getrandnumstr + "%22"
-	getblockInfo, getresq, err := handle.SendRMSVoteMsgToNode(nodeUrl, sendmsgNew)
+	//getblockInfo, getresq, err := handle.SendRMSVoteMsgToNode(nodeUrl, sendmsgNew)
+	//11.10 set req to Timeout
+	timeoout := time.Second * 30
+	getblockheight, err := handle.SendMsgWithTimeout(timeoout,nodeUrl, sendmsgNew)
+
 	if err != nil {
-		log.Error("cur after broadcast_tx_commit(),get error! ,getRespInfo is :%v,err is:%v", getblockInfo, err)
+		log.Error("cur after broadcast_tx_commit(),get error! ,getRespInfo is :%v,err is:%v", "getblockInfo", err)
 		return 0, err
 	}
-	fmt.Println("cur broadcast_tx_commit(),get getresq hash is:%s,height is:%d", getresq.Hash, getresq.Height)
-	return getresq.Height, nil
+	fmt.Println("cur broadcast_tx_commit(),get getresq hash is:%s,height is:%d", "getresq.Hash", getblockheight)
+	return getblockheight, nil
 }
 func ReqSTDTMcommitValidatorTx(curip string, newnodeip, pubkey string) (curheight int64, err error) {
 	if pubkey == "" {

@@ -3,14 +3,19 @@ package main
 import (
 	"2021New_BFLProjTotal/tm_msgreq_server/config"
 	"2021New_BFLProjTotal/tm_msgreq_server/curl_req"
+
+	//"2021New_BFLProjTotal/tm_msgreq_server/curl_req"
+	//fx "2021New_BFLProjTotal/tm_msgreq_server/req_timeouttry"
 	"fmt"
 	"github.com/mkideal/log"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"os"
 	"regexp"
 	"strings"
+	"time"
 )
 
 func getIPV6Lan() string {
@@ -72,15 +77,32 @@ func InitNodeList(curcfg *config.ConfigInfomation) []string {
 	return curNodeUrlList
 
 }
+
+const (
+	wiggleTimeBeforeFork       = 500 * time.Millisecond // Random delay (per signer) to allow concurrent signers
+	fixedBackOffTimeBeforeFork = 200 * time.Millisecond
+)
+
+
+func GetdelayForRamanujanFork() time.Duration {
+	//headtime := 0x6308aba2
+	headtime := time.Now().Unix()
+	delay := time.Until(time.Unix(int64(headtime), 0)) // nolint: gosimple
+
+	wiggle := time.Duration(3+1) * wiggleTimeBeforeFork
+	delay += fixedBackOffTimeBeforeFork + time.Duration(rand.Int63n(int64(wiggle)))
+	fmt.Printf("check GetdelayForRamanujanFork() ,wiggle is:%d,headtime val is:%s\r\n", wiggle, delay)
+	return delay
+}
 func main() {
-	getlocalIp := getIPV6Lan()
-	fmt.Println("getlocalIp is:%s", getlocalIp)
+
 	getlocalIp2, err := GetOutBoundIP()
 	if err != nil {
 		fmt.Println("getlocalIp2 error!,err is:%v", err)
 	}
 	fmt.Println("getlocalIp2 is:%s", getlocalIp2)
-	//
+
+
 	//curl_req.ReqTMCommitTx()
 	if err := config.InitWithProviders("multifile/console", "./logs"); err != nil {
 		panic("init log error: " + err.Error())
@@ -105,9 +127,9 @@ func main() {
 	if curRequestInterval == 0 {
 		curRequestInterval = 10
 	}
+
 	reqProc := curl_req.VoteServer{RequestInterval: curRequestInterval, NodeUrlList: curNodeUrlList} //10
 	go reqProc.ResetGroupVotesMap(reqProc.RequestInterval)
-	//curl_req.ReqRMcommitTxInterval()
 	//curl_req.ReqSTDTMcommitValidatorTx("106.3.133.179", "", "")
 	getReq := <-ch
 	fmt.Println(getReq)
